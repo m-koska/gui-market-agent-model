@@ -1,0 +1,39 @@
+name: Build Windows Release
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Patch CMakeLists.txt for MSVC compatibility
+        shell: bash
+        run: |
+          sed -i 's/CMAKE_CXX_STANDARD 26/CMAKE_CXX_STANDARD 20/g' CMakeLists.txt
+          sed -i 's/VERSION 4.2/VERSION 3.20/g' CMakeLists.txt
+
+      - name: Configure CMake
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build Project
+        run: cmake --build build --config Release -j 4
+
+      - name: Prepare Release Package
+        shell: pwsh
+        run: |
+          mkdir release_package
+          copy build\Release\agent_model.exe release_package\
+          Copy-Item -Path assets -Destination release_package\assets -Recurse
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BrockHommes-Simulator-Windows
+          path: release_package/
