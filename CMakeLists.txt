@@ -88,7 +88,7 @@ target_include_directories(model_core PUBLIC
 )
 
 add_library(ui STATIC
-        src/UI/UiRenderer.cpp
+        src/UI/UIRenderer.cpp
 
         include/AgentModel/UIRenderer.hpp
 )
