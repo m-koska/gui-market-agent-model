@@ -33,8 +33,8 @@ namespace AgentModel::Engine {
 	struct alignas(64) MarketWorld {
 
 		// Price history for reevaluating strategies
-		double x_t{0.0};
-		double x_t_minus_1{0.0};
+		double x_t{1.0};
+		double x_t_minus_1{1.0};
 
 		// Parameters
 		std::atomic<double> discounter{1.1};                // R = 1 + r	|	risk-free rate

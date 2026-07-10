@@ -1,9 +1,8 @@
 #pragma once
 
 #include "ModelStructures.hpp"
-#include "SimulationBridge.hpp"
+#include "SimulationEngine.hpp"
 
-#include <functional>
 #include <vector>
 
 #include <GLFW/glfw3.h>
@@ -41,15 +40,13 @@ namespace AgentModel::UI {
 		static void draw_candles(const char* id, const double* x, const double* open, const double* high, const double* low, const double* close, int count, double width);
 		void process_ticks(Engine::SimulationBridge& bridge);
 
-		void render_setup();
+		void render_setup(Engine::SimulationEngine& simulation_engine);
 		void render_simulation(Engine::MarketWorld* market) const;
 
 	public:
 
-		std::function<void(uint32_t)> on_start_engine;
-
 		bool init(int width, int height, const char* title);
-		void run_loop(Engine::SimulationBridge& bridge, Engine::MarketWorld*& market_ptr);
+		void run_loop(Engine::SimulationEngine& simulation_engine);
 		void shutdown() const;
 
 	};

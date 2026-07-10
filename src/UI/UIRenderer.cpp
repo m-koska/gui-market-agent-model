@@ -1,5 +1,5 @@
 #include "AgentModel/UIRenderer.hpp"
-#include "AgentModel/Model.hpp"
+#include "AgentModel/SimulationEngine.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -15,7 +15,7 @@
 
 namespace AgentModel::UI {
 
-    void UIRenderer::render_setup() {
+    void UIRenderer::render_setup(Engine::SimulationEngine& simulation_engine) {
 
         const ImGuiIO& io = ImGui::GetIO();
 
@@ -46,12 +46,12 @@ namespace AgentModel::UI {
             if (ImGui::Button("START", ImVec2(-1, 50))) {
 
                 current_app_state = AppState::Simulation;
-
-                if (on_start_engine) {
+                simulation_engine.simulation_start(selected_agent_count);
+                /*if (on_start_engine) {
 
                     on_start_engine(static_cast<uint32_t>(selected_agent_count));
 
-                }
+                }*/
 
             }
 
@@ -410,7 +410,8 @@ void UIRenderer::render_simulation(Engine::MarketWorld* market) const {
         ImGui::End();
     }
 
-    void UIRenderer::run_loop(Engine::SimulationBridge& bridge, Engine::MarketWorld*& market_ptr) {
+    //void UIRenderer::run_loop(Engine::SimulationBridge& bridge, Engine::MarketWorld*& market_ptr) {
+    void UIRenderer::run_loop(Engine::SimulationEngine& simulation_engine) {
 
         while (!glfwWindowShouldClose(window)) {
 
@@ -422,12 +423,12 @@ void UIRenderer::render_simulation(Engine::MarketWorld* market) const {
 
             if (current_app_state == AppState::Setup) {
 
-                render_setup();
+                render_setup(simulation_engine);
 
             } else {
 
-                process_ticks(bridge);
-                render_simulation(market_ptr);
+                process_ticks(simulation_engine.get_bridge());
+                render_simulation(simulation_engine.get_market());
 
             }
 

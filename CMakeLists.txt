@@ -74,14 +74,13 @@ target_link_libraries(ui_core PUBLIC glfw OpenGL::GL)
 
 add_library(ring_buffer INTERFACE
         include/AgentModel/RingBuffer.hpp
-        include/AgentModel/SimulationBridge.hpp
 )
 
 add_library(model_core STATIC
-        src/Engine/Model.cpp
+        src/Engine/SimulationEngine.cpp
 
         include/AgentModel/ModelStructures.hpp
-        include/AgentModel/Model.hpp
+        include/AgentModel/SimulationEngine.hpp
 )
 target_include_directories(model_core PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
