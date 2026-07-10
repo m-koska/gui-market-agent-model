@@ -2,7 +2,6 @@
 
 int main() {
 
-	AgentModel::Engine::SimulationEngine engine;
 	AgentModel::UI::UIRenderer renderer;
 
 	if (!renderer.init(1280, 720, "Brock-Hommes Simulator")) {
@@ -11,7 +10,7 @@ int main() {
 
 	}
 
-	AgentModel::Engine::SimulationEngine simulation;
+	AgentModel::Engine::SimulationEngine engine;
 
 	renderer.run_loop(engine);
 
