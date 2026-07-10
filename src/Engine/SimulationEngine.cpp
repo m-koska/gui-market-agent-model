@@ -70,7 +70,7 @@ namespace AgentModel::Engine {
 		std::uniform_real_distribution dist(0.0, 1.0);
 
 		// main simulation loop: reassigning strategies
-		while (get_bridge().is_running.load(std::memory_order_acquire)) {
+		while (true) {
 
 			uint32_t thread_fundamentalist_count = 0;
 			uint32_t thread_trend_chaser_count = 0;
@@ -96,6 +96,8 @@ namespace AgentModel::Engine {
 
 			// calling on_turn_complete when all threads are done
 			sync_point->arrive_and_wait();
+			if (!get_bridge().is_running.load(std::memory_order_acquire))
+				break;
 
 		}
 
@@ -139,8 +141,13 @@ namespace AgentModel::Engine {
 	}
 
 	void SimulationEngine::simulation_stop() {
+
+		if (bridge)
+			bridge->is_running.store(false, std::memory_order_release);
+
 		for (auto& thread : threads) {
 			if (thread.joinable()) thread.join();
 		}
 	}
+
 }
