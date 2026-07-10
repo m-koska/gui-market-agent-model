@@ -2,10 +2,10 @@
 #include <thread>
 #include <vector>
 
-#include "Model/Model.hpp"
-#include "Model/ModelStructures.hpp"
-#include "Ui/UiRenderer.hpp"
-#include "Utils/SimulationBridge.hpp"
+#include "Model.hpp"
+#include "ModelStructures.hpp"
+#include "UiRenderer.hpp"
+#include "SimulationBridge.hpp"
 
 int main() {
 

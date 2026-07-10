@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ModelStructures.hpp"
-#include "../Utils/SimulationBridge.hpp"
+#include "SimulationBridge.hpp"
 
 namespace Model {
 

@@ -5,7 +5,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../Utils/SimulationBridge.hpp"
+#include "SimulationBridge.hpp"
 
 namespace Model {
 	struct MarketWorld;

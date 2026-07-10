@@ -73,26 +73,28 @@ target_link_libraries(ui_core PUBLIC glfw OpenGL::GL)
 # ==========================================
 
 add_library(ring_buffer INTERFACE
-        src/Utils/RingBuffer.hpp
-        src/Utils/SimulationBridge.hpp
+        include/RingBuffer.hpp
+        include/SimulationBridge.hpp
 )
 
 add_library(model_core STATIC
-        src/Model/ModelStructures.hpp
-        src/Model/Model.hpp
         src/Model/Model.cpp
+
+        include/ModelStructures.hpp
+        include/Model.hpp
 )
 target_include_directories(model_core PUBLIC
-        src/Model
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 add_library(ui STATIC
-        src/Ui/UiRenderer.hpp
         src/Ui/UiRenderer.cpp
+
+        include/UiRenderer.hpp
 )
 
 target_include_directories(ui PUBLIC
-        src/Ui
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_link_libraries(ui PRIVATE ui_core ring_buffer)
@@ -111,7 +113,7 @@ endif()
 # ==========================================
 # 4. executable
 # ==========================================
-add_executable(agent_model src/main.cpp)
+add_executable(agent_model apps/main.cpp)
 
 target_link_libraries(agent_model PRIVATE
         ring_buffer

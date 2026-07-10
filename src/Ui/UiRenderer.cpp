@@ -1,5 +1,5 @@
 #include "UiRenderer.hpp"
-#include "../Model/Model.hpp"
+#include "Model.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
