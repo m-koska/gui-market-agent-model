@@ -11,7 +11,7 @@ namespace Model {
 	struct MarketWorld;
 }
 
-namespace Ui {
+namespace AgentModel::UI {
 
 	enum class AppState : uint8_t {
 		Setup,

@@ -1,4 +1,4 @@
-#include "Model.hpp"
+#include "AgentModel/Model.hpp"
 
 #include <barrier>
 #include <thread>
