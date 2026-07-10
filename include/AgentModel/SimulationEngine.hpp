@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <functional>
 #include <random>
+#include <thread>
+#include <vector>
 
 #include "ModelStructures.hpp"
 #include "RingBuffer.hpp"
@@ -43,7 +45,15 @@ namespace AgentModel::Engine {
     std::unique_ptr<SimulationBridge> bridge = std::make_unique<SimulationBridge>();
 
     std::vector<std::thread> threads;
-    std::unique_ptr<std::barrier<std::function<void()>>> sync_point = nullptr; // created ptr to allow default constructor
+
+    struct CompletionFunction {
+      SimulationEngine* engine;
+      void operator()() noexcept {
+        engine->on_turn_complete();
+      }
+    };
+
+    std::unique_ptr<std::barrier<CompletionFunction>> sync_point = nullptr; // created ptr to allow default constructor
 
     std::random_device rd;
     std::mt19937 market_noise_rng;

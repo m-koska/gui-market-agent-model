@@ -118,9 +118,9 @@ namespace AgentModel::Engine {
 		const uint32_t num_threads = 4;
 		const uint32_t chunk_size = agent_count / num_threads;
 
-		sync_point = std::make_unique<std::barrier<std::function<void()>>> (
+		sync_point = std::make_unique<std::barrier<CompletionFunction>> (
 			num_threads,
-			[this]() noexcept { this->on_turn_complete(); }
+			CompletionFunction{this}
 		);
 
 		on_turn_complete();
