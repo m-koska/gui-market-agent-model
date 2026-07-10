@@ -1,13 +1,14 @@
 #pragma once
 
+#include "ModelStructures.hpp"
+#include "SimulationBridge.hpp"
+
 #include <functional>
 #include <vector>
 
 #include <GLFW/glfw3.h>
 
-#include "SimulationBridge.hpp"
-
-namespace Model {
+namespace AgentModel::Model {
 	struct MarketWorld;
 }
 
@@ -18,15 +19,15 @@ namespace AgentModel::UI {
 		Simulation
 	};
 
-	class UiRenderer {
+	class UIRenderer {
 
 	private:
 
 		GLFWwindow* window = nullptr;
-		std::vector<Utils::CandleData> candles;
+		std::vector<Engine::CandleData> candles;
 
 		bool is_candle_active = false;
-		Utils::CandleData active_candle{};
+		Engine::CandleData active_candle{};
 		size_t ticks_processed = 0;
 
 		const size_t ticks_per_candle = 15;
@@ -38,20 +39,17 @@ namespace AgentModel::UI {
 		void set_theme();
 
 		static void draw_candles(const char* id, const double* x, const double* open, const double* high, const double* low, const double* close, int count, double width);
-		void process_ticks(Utils::SimulationBridge& bridge);
+		void process_ticks(Engine::SimulationBridge& bridge);
 
 		void render_setup();
-		void render_simulation(Model::MarketWorld* market) const;
+		void render_simulation(Engine::MarketWorld* market) const;
 
 	public:
-
-		UiRenderer() = default;
-		~UiRenderer() = default;
 
 		std::function<void(uint32_t)> on_start_engine;
 
 		bool init(int width, int height, const char* title);
-		void run_loop(Utils::SimulationBridge& bridge, Model::MarketWorld*& market_ptr);
+		void run_loop(Engine::SimulationBridge& bridge, Engine::MarketWorld*& market_ptr);
 		void shutdown() const;
 
 	};

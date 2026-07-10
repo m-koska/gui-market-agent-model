@@ -3,8 +3,8 @@
 #include "ModelStructures.hpp"
 #include "SimulationBridge.hpp"
 
-namespace Model {
+namespace AgentModel::Engine {
 
-	void run(MarketWorld &market, AgentPopulation &pop, Utils::SimulationBridge& simulation_bridge);
+	void run(MarketWorld &market, AgentPopulation &pop, SimulationBridge& simulation_bridge);
 
 }

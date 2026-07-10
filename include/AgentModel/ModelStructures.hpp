@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <atomic>
 
-namespace Model {
+namespace AgentModel::Engine {
 
 	enum class Strategy : uint8_t {
 

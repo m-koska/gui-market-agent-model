@@ -6,9 +6,9 @@
 #include <random>
 #include <chrono>
 
-namespace Model {
+namespace AgentModel::Engine {
 
-	void run(MarketWorld &market, AgentPopulation &pop, Utils::SimulationBridge& simulation_bridge) {
+	void run(MarketWorld &market, AgentPopulation &pop, SimulationBridge& simulation_bridge) {
 
 		const auto agent_count = pop.strategies.size();
 
@@ -72,7 +72,7 @@ namespace Model {
 			pop.fundamentalist_count.store(0, std::memory_order_relaxed);
 			pop.trend_chaser_count.store(0, std::memory_order_relaxed);
 
-			Utils::TickData tick{};
+			TickData tick{};
 			tick.step = current_step++;
 			tick.x_t = new_x;
 

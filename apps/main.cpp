@@ -2,14 +2,14 @@
 #include <thread>
 #include <vector>
 
-#include "Model.hpp"
-#include "ModelStructures.hpp"
-#include "UiRenderer.hpp"
-#include "SimulationBridge.hpp"
+#include "AgentModel/Model.hpp"
+#include "AgentModel/ModelStructures.hpp"
+#include "AgentModel/UIRenderer.hpp"
+#include "AgentModel/SimulationBridge.hpp"
 
 int main() {
 
-	Ui::UiRenderer renderer;
+	AgentModel::UI::UIRenderer renderer;
 
 	if (!renderer.init(1280, 720, "Brock-Hommes Simulator")) {
 
@@ -17,25 +17,25 @@ int main() {
 
 	}
 
-	std::unique_ptr<Model::MarketWorld> market = nullptr;
-	std::unique_ptr<Model::AgentPopulation> population = nullptr;
+	std::unique_ptr<AgentModel::Engine::MarketWorld> market = nullptr;
+	std::unique_ptr<AgentModel::Engine::AgentPopulation> population = nullptr;
 
-	const auto bridge = std::make_unique<Utils::SimulationBridge>();
+	const auto bridge = std::make_unique<AgentModel::Engine::SimulationBridge>();
 
 	std::thread engine_thread;
 
-	Model::MarketWorld* raw_market_ptr = nullptr;
+	AgentModel::Engine::MarketWorld* raw_market_ptr = nullptr;
 
 
 	renderer.on_start_engine = [&](uint32_t agent_count) {
 		// model initialisation
-		market = std::make_unique<Model::MarketWorld>();
-		population = std::make_unique<Model::AgentPopulation>(agent_count);
+		market = std::make_unique<AgentModel::Engine::MarketWorld>();
+		population = std::make_unique<AgentModel::Engine::AgentPopulation>(agent_count);
 		market->x_t_minus_1 = 1.0;
 		market->x_t = 1.0;
 
 		raw_market_ptr = market.get();
-		engine_thread = std::thread(Model::run, std::ref(*market), std::ref(*population), std::ref(*bridge));
+		engine_thread = std::thread(AgentModel::Engine::run, std::ref(*market), std::ref(*population), std::ref(*bridge));
 
 	};
 

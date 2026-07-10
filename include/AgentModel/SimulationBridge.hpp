@@ -1,7 +1,7 @@
 #pragma once
-#include "RingBuffer.hpp"
+#include "AgentModel/RingBuffer.hpp"
 
-namespace Utils {
+namespace AgentModel::Engine {
 
 	struct TickData {
 
@@ -12,7 +12,7 @@ namespace Utils {
 
 	struct SimulationBridge {
 
-		RingBuffer<TickData, 16384> buffer{};
+		Utils::RingBuffer<TickData, 16384> buffer{};
 		std::atomic<bool> is_running{true};
 
 	};

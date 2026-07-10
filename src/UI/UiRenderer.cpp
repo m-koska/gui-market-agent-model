@@ -1,5 +1,5 @@
-#include "UiRenderer.hpp"
-#include "Model.hpp"
+#include "AgentModel/UIRenderer.hpp"
+#include "AgentModel/Model.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -13,9 +13,9 @@
 #include "implot_internal.h"
 
 
-namespace Ui {
+namespace AgentModel::UI {
 
-    void UiRenderer::render_setup() {
+    void UIRenderer::render_setup() {
 
         const ImGuiIO& io = ImGui::GetIO();
 
@@ -61,7 +61,7 @@ namespace Ui {
 
     }
 
-    bool UiRenderer::init(const int width, const int height, const char* title) {
+    bool UIRenderer::init(const int width, const int height, const char* title) {
 
         if (!glfwInit()) return false;
 
@@ -107,7 +107,7 @@ namespace Ui {
 
     }
 
-void UiRenderer::set_theme() {
+void UIRenderer::set_theme() {
 
         // ==========================================
         // 1. Window properties
@@ -179,7 +179,7 @@ void UiRenderer::set_theme() {
     }
 
     // Candle drawing engine
-    void UiRenderer::draw_candles(const char* id, const double* x, const double* open, const double* high, const double* low, const double* close, const int count, const double width) {
+    void UIRenderer::draw_candles(const char* id, const double* x, const double* open, const double* high, const double* low, const double* close, const int count, const double width) {
 
         if (ImPlot::BeginItem(id)) {
 
@@ -216,7 +216,7 @@ void UiRenderer::set_theme() {
 
     }
 
-    void UiRenderer::process_ticks(Utils::SimulationBridge& bridge) {
+    void UIRenderer::process_ticks(Engine::SimulationBridge& bridge) {
 
         while (const auto tick = bridge.buffer.pop()) {
 
@@ -258,7 +258,7 @@ void UiRenderer::set_theme() {
 
     }
 
-void UiRenderer::render_simulation(Model::MarketWorld* market) const {
+void UIRenderer::render_simulation(Engine::MarketWorld* market) const {
 
         const ImGuiIO& io = ImGui::GetIO();
         ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -410,7 +410,7 @@ void UiRenderer::render_simulation(Model::MarketWorld* market) const {
         ImGui::End();
     }
 
-    void UiRenderer::run_loop(Utils::SimulationBridge& bridge, Model::MarketWorld*& market_ptr) {
+    void UIRenderer::run_loop(Engine::SimulationBridge& bridge, Engine::MarketWorld*& market_ptr) {
 
         while (!glfwWindowShouldClose(window)) {
 
@@ -445,7 +445,7 @@ void UiRenderer::render_simulation(Model::MarketWorld* market) const {
 
     }
 
-    void UiRenderer::shutdown() const {
+    void UIRenderer::shutdown() const {
 
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();

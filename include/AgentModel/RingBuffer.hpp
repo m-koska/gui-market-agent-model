@@ -4,7 +4,7 @@
 #include <atomic>
 #include <optional>
 
-namespace Utils {
+namespace AgentModel::Utils {
 
 	template <typename T, size_t capacity>
 	class RingBuffer {
